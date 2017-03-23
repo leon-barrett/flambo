@@ -22,6 +22,7 @@ Flambo is a Clojure DSL for [Apache Spark](http://spark.apache.org/docs/latest/)
 * [License](#license)
 
 <a name="overview">
+
 ## Overview
 
 Apache Spark is a fast and general-purpose cluster computing system. It provides high-level APIs in Java, Scala and Python, and an optimized engine that supports general execution graphs.
@@ -31,12 +32,14 @@ Flambo is a Clojure DSL for Spark. It allows you to create and manipulate Spark 
 "So that's where I came from." --Flambo
 
 <a name="versions">
+
 ## Supported Spark Versions
 
 flambo 0.8.0 targets Spark 2.x
 flambo 0.7.2 targets Spark 1.x
 
 <a name="installation">
+
 ## Installation
 
 Flambo is available from clojars. Depending on the version of Spark you're using, add one of the following to the dependences in your `project.clj` file:
