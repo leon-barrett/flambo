@@ -7,12 +7,12 @@ Flambo is a Clojure DSL for [Apache Spark](http://spark.apache.org/docs/latest/)
 **Contents**
 
 * [Overview](#overview)
-* [Supported Spark Versions](#versions)
+* [Supported Spark Versions](#supported-spark-versions)
 * [Installation](#installation)
 * [AOT](#aot)
 * [Usage](#usage)
   * [Initializing flambo](#initializing-flambo)
-  * [Resilient Distributed Datasets](#rdds)
+  * [Resilient Distributed Datasets](#resilient-distributed-datasets-rdds)
   * [RDD Operations](#rdd-operations)
   * [RDD Persistence](#rdd-persistence)
 * [Standalone Applications](#running-flambo)
@@ -20,8 +20,6 @@ Flambo is a Clojure DSL for [Apache Spark](http://spark.apache.org/docs/latest/)
 * [Acknowledgements](#acknowledgements)
 * [Support](#support)
 * [License](#license)
-
-<a name="overview">
 
 ## Overview
 
@@ -31,14 +29,10 @@ Flambo is a Clojure DSL for Spark. It allows you to create and manipulate Spark 
 
 "So that's where I came from." --Flambo
 
-<a name="versions">
-
 ## Supported Spark Versions
 
 flambo 0.8.0 targets Spark 2.x
 flambo 0.7.2 targets Spark 1.x
-
-<a name="installation">
 
 ## Installation
 
@@ -57,7 +51,6 @@ Don't forget to add spark (and possibly your hadoop distribution's hadoop-client
               [[org.apache.spark/spark-core_2.11 "2.0.1"]]}}}
 ```
 
-<a name="aot">
 ## AOT
 
 It is necessary to AOT compile any namespaces which require `flambo.api`. You can AOT compile your application uberjar before running it in your spark cluster. This can easily accomplished by adding an `:uberjar` profile with `{:aot :all}` in it.
@@ -69,12 +62,10 @@ When working locally in a REPL, you'll want to AOT compile those namespaces as w
     {:aot [my.namespace my.other.namespace]}}
 ```
 
-<a name="usage">
 ## Usage
 
 Flambo makes developing Spark applications quick and painless by utilizing the powerful abstractions available in Clojure. For instance, you can use the Clojure threading macro `->` to chain sequences of operations and transformations.
 
-<a name="initializing-flambo">
 ### Initializing flambo
 
 The first step is to create a Spark configuration object, SparkConf, which contains information about your application. This is used to construct a SparkContext object which tells Spark how to access a cluster.
@@ -107,7 +98,6 @@ For running on YARN, see [running on YARN](https://spark.apache.org/docs/0.9.1/r
 
 Hard-coding the value of `master` and other configuration parameters can be avoided by passing the values to Spark when running `spark-submit` (Spark 1.0.0) or by allowing `spark-submit` to read these properties from a configuration file. See [Standalone Applications](#running-flambo) for information on running flambo applications and see Spark's [documentation](http://spark.apache.org/docs/latest/configuration.html) for more details about configuring Spark properties.
 
-<a name="rdds">
 ### Resilient Distributed Datasets (RDDs)
 
 The main abstraction Spark provides is a _resilient distributed dataset_, RDD, which is a fault-tolerant collection of elements partitioned across the nodes of the cluster that can be operated on in parallel. There are two ways to create RDDs: _parallelizing_ an existing collection in your driver program, or referencing a dataset in an external storage system, such as a shared filesystem, HDFS, HBase, or any data source offering a Hadoop InputFormat.
@@ -144,7 +134,6 @@ Text file RDDs can be created in flambo using the `text-file` function under the
 (def data (f/text-file sc "hdfs://hostname:<port>/home/user/data_archive/2013/12/23/*/*.bz2"))
 ```
 
-<a name="rdd-operations">
 ### RDD Operations
 
 RDDs support two types of operations:
@@ -152,7 +141,6 @@ RDDs support two types of operations:
 * [_transformations_](#rdd-transformations), which create a new dataset from an existing one
 * [_actions_](#rdd-actions), which return a value to the driver program after running a computation on the dataset
 
-<a name="basics">
 #### Basics
 
 To illustrate RDD basics in flambo, consider the following simple application using the sample `data.txt` file located at the root of the flambo repo.
@@ -177,7 +165,6 @@ If we also wanted to reuse the resulting RDD of length of lines in later steps, 
 
 before the `reduce` action, which would cause the line-lengths RDD to be saved to memory after the first time it is realized. See [RDD Persistence](#rdd-persistence) for more on persisting and caching RDDs in flambo.
 
-<a name="flambo-functions">
 #### Passing Functions to flambo
 
 Spark’s API relies heavily on passing functions in the driver program to run on the cluster. Flambo makes it easy and natural to define serializable Spark functions/operations and provides two ways to do this:
